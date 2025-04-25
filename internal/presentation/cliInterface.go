@@ -1,4 +1,4 @@
-package cli
+package Cli
 
 import "github.com/rezaabaskhanian/toDoList_khodam/internal/domain"
 

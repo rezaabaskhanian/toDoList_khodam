@@ -1,39 +1,40 @@
-package cli
+package Cli
 
 import (
 	"fmt"
 
 	"github.com/rezaabaskhanian/toDoList_khodam/internal/domain"
 
-	"github.com/rezaabaskhanian/toDoList_khodam/internal/usecase/task"
+	Task "github.com/rezaabaskhanian/toDoList_khodam/internal/usecase/task"
 )
 
 type CliService struct {
-	taskCliService *task.TaskService
+	taskCliService Task.TaskService
 }
 
-func NewTaskCli(taskCliService task.TaskService) TaskServiceCli {
+func NewTaskCli(taskCliService Task.TaskService) TaskServiceCli {
 	return &CliService{taskCliService: taskCliService}
 }
 
 // CreateTask implements TaskServiceCli.
 func (c *CliService) CreateTask(task domain.Task) error {
 	// فراخوانی سرویس برای ایجاد تسک جدید
-	err := c.taskCliService.CreateTask(task)
+	task, err := c.taskCliService.CreateTask(task.Title, task.Description)
+
 	if err != nil {
 		// اگر خطایی پیش بیاید، پیام خطا چاپ می‌شود
 		fmt.Println("خطا در ایجاد تسک:", err)
 		return err
 	}
 	// اگر تسک با موفقیت ایجاد شود، پیامی به کاربر نمایش داده می‌شود
-	fmt.Println("تسک با موفقیت ایجاد شد.")
+	fmt.Println("تسک با موفقیت ایجاد شد.", task)
 	return nil
 
 }
 
 // DeleteTask implements TaskServiceCli.
 func (c *CliService) DeleteTask(id int) error {
-	err := c.taskCliService.DeleteTask(id)
+	err := c.taskCliService.DeleteById(id)
 	if err != nil {
 		// اگر خطا پیش آید، پیام خطا چاپ می‌شود
 		fmt.Println("خطا در حذف تسک:", err)

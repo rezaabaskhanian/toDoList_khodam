@@ -6,22 +6,24 @@ import (
 	"os"
 
 	"github.com/rezaabaskhanian/toDoList_khodam/internal/domain"
+	Task "github.com/rezaabaskhanian/toDoList_khodam/internal/usecase/task"
 )
 
 const taskStorageFile = "task.json"
 
-type TaskRepository interface {
-	Save(tasks []domain.Task) error
-	Load() ([]domain.Task, error)
-}
+// type TaskRepository interface {
+// 	Save(tasks []domain.Task) error
+// 	Load() ([]domain.Task, error)
+// }
 
 // FileTaskRepository پیاده‌سازی ذخیره‌سازی تسک‌ها در فایل است.
 type FileTaskRepository struct {
 	FileName string
+	repo     Task.TaskRepository
 }
 
 // NewFileTaskRepository سازنده‌ای برای ایجاد ریپازیتوری است.
-func NewFileTaskRepository(fileName string) TaskRepository {
+func NewFileTaskRepository(fileName string) *FileTaskRepository {
 	return &FileTaskRepository{FileName: fileName}
 }
 
